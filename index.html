@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planetary Restoration Learning System | Comprehensive Edition</title>
+    <meta name="description" content="Comprehensive interactive learning platform for planetary stewardship and ecological restoration">
+    
+    <style>
+        /* BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --bg-card: #242942;
+            --text-primary: #e0e7ff;
+            --text-secondary: #94a3b8;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --border-color: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-heading: 'Georgia', serif;
+        }
+        
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-primary: #f8fafc;
+                --bg-secondary: #e2e8f0;
+                --bg-card: #ffffff;
+                --text-primary: #1e293b;
+                --text-secondary: #475569;
+                --border-color: #cbd5e1;
+                --shadow: rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* PARALLAX BACKGROUND */
+        #parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        #constellation-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* GAMIFICATION HUD */
+        #hud-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, transparent 100%);
+            padding: var(--spacing-md);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .hud-grid {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: var(--spacing-md);
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .xp-bar {
+            height: 24px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+        }
+        
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transition: width 0.5s ease;
+        }
+        
+        .level-badge, .streak-counter {
+            background: var(--bg-card);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 20px;
+            border: 2px solid var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 0.9rem;
+        }
+        
+        .level-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* HEADER */
+        header {
+            background: var(--bg-secondary);
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin-top: 90px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* NAVIGATION */
+        nav {
+            background: var(--bg-secondary);
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            position: sticky;
+            top: 90px;
+            z-index: 900;
+        }
+        
+        .nav-btn, .theme-btn, .lang-btn, .export-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        
+        .nav-btn:hover, .theme-btn:hover, .lang-btn:hover, .export-btn:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        /* MAIN CONTENT */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+        }
+        
+        #search-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        /* QUEST PANEL */
+        .quest-panel {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-warning);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .quest-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* TEACHER PANEL */
+        .teacher-customization {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .teacher-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .teacher-btn {
+            background: var(--accent-secondary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .teacher-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* MODULES */
+        .module {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-lg);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .module:hover {
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+        
+        .module-header {
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+        }
+        
+        .module-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            flex: 1;
+        }
+        
+        .module-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 12px;
+        }
+        
+        .module-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .chevron {
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+        
+        .module.expanded .chevron {
+            transform: rotate(180deg);
+        }
+        
+        .module-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .module.expanded .module-content {
+            max-height: 10000px;
+        }
+        
+        .module-body {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .lesson {
+            background: var(--bg-secondary);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-lg);
+            border-left: 4px solid var(--accent-primary);
+        }
+        
+        .lesson h4 {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--accent-primary);
+        }
+        
+        .lesson-section {
+            margin-top: var(--spacing-md);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .lesson-section h5 {
+            color: var(--accent-secondary);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1rem;
+        }
+        
+        .lesson-section ul, .lesson-section ol {
+            margin-left: var(--spacing-lg);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .lesson-section li {
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.7;
+        }
+        
+        .implementation-steps {
+            background: rgba(59, 130, 246, 0.1);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            margin-top: var(--spacing-sm);
+        }
+        
+        .tools-resources {
+            background: rgba(139, 92, 246, 0.1);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            margin-top: var(--spacing-sm);
+        }
+        
+        .resource-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+        
+        .key-terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .key-term {
+            background: var(--accent-primary);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        
+        .quiz-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: var(--spacing-md);
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+        
+        .quiz-btn:hover {
+            background: var(--accent-secondary);
+            transform: scale(1.05);
+        }
+        
+        /* QUIZ MODAL */
+        .quiz-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+        }
+        
+        .quiz-modal.active {
+            display: flex;
+        }
+        
+        .quiz-container {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px var(--shadow);
+        }
+        
+        .quiz-header {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            padding: var(--spacing-lg);
+            color: white;
+            border-radius: 14px 14px 0 0;
+        }
+        
+        .quiz-progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: var(--spacing-md);
+            overflow: hidden;
+        }
+        
+        .quiz-progress-fill {
+            height: 100%;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .quiz-body {
+            padding: var(--spacing-xl);
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        .quiz-option {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: var(--spacing-sm);
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--accent-primary);
+            transform: translateX(4px);
+        }
+        
+        .quiz-option.selected {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+        
+        .quiz-option.correct {
+            background: var(--accent-success);
+            color: white;
+            border-color: var(--accent-success);
+        }
+        
+        .quiz-option.incorrect {
+            background: var(--accent-danger);
+            color: white;
+            border-color: var(--accent-danger);
+        }
+        
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .quiz-feedback {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+        }
+        
+        .quiz-feedback.correct {
+            background: var(--accent-success);
+            color: white;
+        }
+        
+        .quiz-feedback.incorrect {
+            background: var(--accent-danger);
+            color: white;
+        }
+        
+        .quiz-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .quiz-btn-primary, .quiz-btn-secondary {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .quiz-btn-primary:hover:not(:disabled) {
+            background: var(--accent-secondary);
+        }
+        
+        .quiz-btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .quiz-btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+        
+        .quiz-results {
+            display: none;
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+        
+        .quiz-results.show {
+            display: block;
+        }
+        
+        .quiz-score {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: var(--spacing-lg) 0;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: var(--bg-secondary);
+            padding: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+            border-top: 2px solid var(--border-color);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .hud-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="parallax-container">
+        <canvas id="constellation-canvas"></canvas>
+    </div>
+    
+    <div id="hud-container">
+        <div class="hud-grid">
+            <div class="xp-bar-container">
+                <div style="font-size: 0.85rem; margin-bottom: 4px; color: var(--text-secondary);">
+                    <span id="xp-text">0 / 100 XP</span> • <span id="next-level">Next: Level 2</span>
+                </div>
+                <div class="xp-bar">
+                    <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="level-badge">
+                <div class="level-icon" id="level-icon">🌱</div>
+                <div>
+                    <div style="font-size: 0.7rem; color: var(--text-secondary);">Level</div>
+                    <div id="level-number" style="font-weight: bold;">1</div>
+                </div>
+            </div>
+            <div class="streak-counter">
+                <span>🔥</span>
+                <div>
+                    <div style="font-size: 0.7rem; color: var(--text-secondary);">Streak</div>
+                    <div id="streak-days" style="font-weight: bold;">0 days</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <header>
+        <h1>🌍 Planetary Restoration Learning System</h1>
+        <p style="color: var(--text-secondary); font-size: 1.1rem;">Comprehensive Guide to Ecological Stewardship</p>
+    </header>
+    
+    <nav>
+        <button class="nav-btn active" onclick="filterModules('all')">All Modules</button>
+        <button class="nav-btn" onclick="filterModules('beginner')">Beginner</button>
+        <button class="nav-btn" onclick="filterModules('intermediate')">Intermediate</button>
+        <button class="nav-btn" onclick="filterModules('advanced')">Advanced</button>
+        <select class="lang-btn" id="lang-selector" onchange="changeLanguage(this.value)">
+            <option value="en">🇬🇧 English</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="fr">🇫🇷 Français</option>
+        </select>
+        <button class="export-btn" onclick="exportHTML()">💾 Save HTML</button>
+        <button class="export-btn" onclick="window.print()">🖨️ Print</button>
+    </nav>
+    
+    <main>
+        <input type="text" id="search-input" placeholder="🔍 Search modules, lessons, strategies, tools...">
+        
+        <div class="quest-panel">
+            <h2>🎯 Daily Learning Goals</h2>
+            <div class="quest-item">
+                <span>✅ Complete one comprehensive lesson</span>
+                <span style="background: var(--accent-warning); padding: 4px 12px; border-radius: 12px; font-weight: bold;">+50 XP</span>
+            </div>
+            <div class="quest-item">
+                <span>🔥 Maintain your learning streak</span>
+                <span style="background: var(--accent-warning); padding: 4px 12px; border-radius: 12px; font-weight: bold;">+25 XP</span>
+            </div>
+            <div class="quest-item">
+                <span>🧠 Score 80%+ on a practice quiz</span>
+                <span style="background: var(--accent-warning); padding: 4px 12px; border-radius: 12px; font-weight: bold;">+75 XP</span>
+            </div>
+        </div>
+        
+        <div class="teacher-customization">
+            <h2>👩‍🏫 For Educators: Adopt & Customize</h2>
+            <p style="color: var(--text-secondary); margin-top: 8px;">This comprehensive platform is designed for teachers to adopt, modify, and expand. All content, quizzes, and systems are fully customizable.</p>
+            <div class="teacher-controls">
+                <button class="teacher-btn" onclick="exportForTeachers()">📦 Export Full Package</button>
+                <button class="teacher-btn" onclick="showCustomizationGuide()">📖 Customization Guide</button>
+                <button class="teacher-btn" onclick="exportQuizBank()">🧠 Download Quiz Bank</button>
+                <button class="teacher-btn" onclick="alert('Add your language to the translations object in the code!')">🌐 Add Languages</button>
+            </div>
+        </div>
+        
+        <div id="modules-container"></div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div style="background: var(--bg-card); padding: var(--spacing-lg); border-radius: 12px; margin-bottom: var(--spacing-lg); border-left: 4px solid var(--accent-success);">
+                <h3>🛡️ Zero-Harm Educational Commitment</h3>
+                <p style="margin-top: 8px; line-height: 1.7;"><strong>Purpose:</strong> This platform exists solely to promote ecological literacy, planetary stewardship, and regenerative practices for current and future generations.</p>
+                <p style="margin-top: 8px; line-height: 1.7;"><strong>Non-Weaponization:</strong> No component may be repurposed for surveillance, manipulation, ecological harm, or violation of human rights.</p>
+                <p style="margin-top: 8px; line-height: 1.7;"><strong>License:</strong> Educational content under CC BY-SA 4.0. Open source patterns retain original licenses.</p>
+            </div>
+            <p style="text-align: center; color: var(--text-secondary);">© 2025 Planetary Restoration Archive | From Extraction to Stewardship</p>
+        </div>
+    </footer>
+    
+    <div class="quiz-modal" id="quiz-modal">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h2 id="quiz-title">Practice Quiz</h2>
+                <p id="quiz-subtitle" style="margin-top: 8px; opacity: 0.9;"></p>
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="quiz-progress"></div>
+                </div>
+            </div>
+            <div class="quiz-body">
+                <div id="quiz-questions-container"></div>
+                <div class="quiz-results" id="quiz-results">
+                    <h2>🎉 Quiz Complete!</h2>
+                    <div class="quiz-score" id="quiz-final-score">0%</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0;">
+                        <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+                            <div id="quiz-correct" style="font-size: 2rem; font-weight: bold; color: var(--accent-success);">0</div>
+                            <div style="color: var(--text-secondary);">Correct</div>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+                            <div id="quiz-incorrect" style="font-size: 2rem; font-weight: bold; color: var(--accent-danger);">0</div>
+                            <div style="color: var(--text-secondary);">Incorrect</div>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+                            <div id="quiz-xp-earned" style="font-size: 2rem; font-weight: bold; color: var(--accent-primary);">0</div>
+                            <div style="color: var(--text-secondary);">XP Earned</div>
+                        </div>
+                    </div>
+                    <div class="quiz-actions">
+                        <button class="quiz-btn-secondary" onclick="closeQuiz()">Close</button>
+                        <button class="quiz-btn-primary" onclick="retakeQuiz()">Retake Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATABASE SETUP
+        let db;
+        
+        function initDB() {
+            return new Promise((resolve) => {
+                const request = indexedDB.open('PlanetaryRestorationDB', 1);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('progress')) {
+                        db.createObjectStore('progress', { keyPath: 'id' });
+                    }
+                };
+                request.onerror = () => resolve(null);
+            });
+        }
+        
+        async function saveProgress(key, value) {
+            if (!db) return;
+            try {
+                const tx = db.transaction(['progress'], 'readwrite');
+                tx.objectStore('progress').put({ id: key, value });
+            } catch(e) { console.error(e); }
+        }
+        
+        async function loadProgress(key) {
+            if (!db) return null;
+            try {
+                const tx = db.transaction(['progress'], 'readonly');
+                const req = tx.objectStore('progress').get(key);
+                return new Promise((resolve) => {
+                    req.onsuccess = () => resolve(req.result?.value);
+                    req.onerror = () => resolve(null);
+                });
+            } catch(e) { return null; }
+        }
+        
+        // TRANSLATIONS
+        const translations = {
+            en: {
+                'site.title': 'Planetary Restoration Learning System'
+            },
+            es: {
+                'site.title': 'Sistema de Aprendizaje de Restauración Planetaria'
+            },
+            fr: {
+                'site.title': 'Système d\'Apprentissage de Restauration Planétaire'
+            }
+        };
+        
+        let currentLang = 'en';
+        
+        function changeLanguage(lang) {
+            currentLang = lang;
+            renderModules();
+        }
+        
+        // GAMIFICATION SYSTEM
+        const gamification = {
+            xp: 0,
+            level: 1,
+            streak: 0,
+            completedLessons: [],
+            levelIcons: ['🌱', '🌿', '🌳', '🌲', '🌴', '🌸', '🌺', '🌻', '🌍', '🌌'],
+            
+            async init() {
+                const saved = await loadProgress('gamification');
+                if (saved) Object.assign(this, saved);
+                this.updateUI();
+            },
+            
+            addXP(amount) {
+                const oldLevel = this.level;
+                this.xp += amount;
+                
+                // Level up at 100, 250, 500,<function_calls>
+<invoke name="artifacts">
+<parameter name="command">update</parameter>
+<parameter name="id">planetary-restoration</parameter>
+<parameter name="old_str">                // Level up at 100, 250, 500,</parameter>
+<parameter name="new_str">                // Level up at 100, 250, 500, 1000, 2000 XP
+                const thresholds = [0, 100, 250, 500, 1000, 2000, 4000, 8000, 15000, 30000];
+                while (this.level < thresholds.length && this.xp >= thresholds[this.level]) {
+                    this.level++;
+                }
+                
+                if (this.level > oldLevel) {
+                    alert(`🎉 Level Up! You reached Level ${this.level}!`);
+                }
+                
+                this.updateUI();
+                this.save();
+            },
+            
+            completeLesson(lessonId) {
+                if (!this.completedLessons.includes(lessonId)) {
+                    this.completedLessons.push(lessonId);
+                    this.addXP(50);
+                }
+            },
+            
+            updateUI() {
+                const thresholds = [0, 100, 250, 500, 1000, 2000, 4000, 8000, 15000, 30000];
+                const current = thresholds[this.level - 1] || 0;
+                const next = thresholds[this.level] || this.xp;
+                const progress = ((this.xp - current) / (next - current)) * 100;
+                
+                document.getElementById('xp-fill').style.width = `${Math.min(progress, 100)}%`;
+                document.getElementById('xp-text').textContent = `${this.xp} / ${next} XP`;
+                document.getElementById('next-level').textContent = `Next: Level ${this.level + 1}`;
+                document.getElementById('level-number').textContent = this.level;
+                document.getElementById('level-icon').textContent = this.levelIcons[Math.min(this.level - 1, this.levelIcons.length - 1)];
+                document.getElementById('streak-days').textContent = `${this.streak} days`;
+            },
+            
+            async save() {
+                await saveProgress('gamification', {
+                    xp: this.xp,
+                    level: this.level,
+                    streak: this.streak,
+                    completedLessons: this.completedLessons
+                });
+            }
+        };
+        
+        // COMPREHENSIVE MODULES DATA - VAST EXPANDED
+        const modules = [
+            {
+                id: 'soil-regeneration-complete',
+                title: 'Soil Regeneration & Restoration - Complete Guide',
+                description: 'Master comprehensive soil restoration from microbiology to large-scale implementation',
+                icon: '🌱',
+                level: 'beginner',
+                duration: '120 min',
+                xpReward: 200,
+                lessons: [
+                    {
+                        id: 'soil-micro-1',
+                        title: 'The Living Soil Food Web - Deep Dive',
+                        content: `Understanding soil as a living ecosystem is foundational to all restoration work. Soil contains more organisms than all above-ground life combined - a single teaspoon of healthy soil contains more microorganisms than there are people on Earth.`,
+                        
+                        detailedContent: `
+                            <h5>The Soil Microbiome Architecture</h5>
+                            <p>Soil health depends on intricate relationships between:</p>
+                            <ul>
+                                <li><strong>Bacteria (10^9 per gram):</strong> Decompose organic matter, fix nitrogen, produce enzymes that break down pollutants</li>
+                                <li><strong>Fungi (several meters of hyphae per gram):</strong> Form mycorrhizal networks, transport nutrients and water over long distances, create soil aggregates</li>
+                                <li><strong>Protozoa (10^4 per gram):</strong> Regulate bacterial populations, release plant-available nitrogen</li>
+                                <li><strong>Nematodes (up to 50 per gram):</strong> Control pest populations, cycle nutrients, indicate soil health</li>
+                                <li><strong>Arthropods:</strong> Shred organic matter, create soil structure, disperse beneficial organisms</li>
+                            </ul>
+                        `,
+                        
+                        strategies: [
+                            {
+                                name: 'Mycorrhizal Inoculation',
+                                description: 'Introduce beneficial fungi to degraded soils',
+                                steps: [
+                                    'Test soil to identify missing fungal species',
+                                    'Source high-quality mycorrhizal inoculant (look for 9+ species diversity)',
+                                    'Apply during planting at root zone depth (6-12 inches)',
+                                    'Avoid fungicides and high-phosphorus fertilizers that inhibit colonization',
+                                    'Monitor establishment through soil microscopy at 30, 60, 90 days'
+                                ],
+                                expectedOutcomes: [
+                                    '400% increase in nutrient uptake efficiency within 3 months',
+                                    '50-80% reduction in irrigation needs',
+                                    'Improved drought resilience and plant vigor',
+                                    'Enhanced soil aggregate stability'
+                                ]
+                            },
+                            {
+                                name: 'Compost Tea Brewing',
+                                description: 'Create liquid microbial inoculants for rapid soil biology restoration',
+                                steps: [
+                                    'Use 5-gallon actively-aerated brewer (400+ GPH air pump)',
+                                    'Add 2 cups high-quality mature compost (aged 6+ months)',
+                                    'Include microbial foods: 2 tbsp molasses, 1 tbsp kelp, 1 tbsp fish hydrolysate',
+                                    'Brew for 24-36 hours at 65-75°F, monitoring DO levels (>6 ppm)',
+                                    'Apply immediately at 5-20 gallons per acre as soil drench or foliar spray'
+                                ],
+                                expectedOutcomes: [
+                                    'Bacterial populations increase 100-1000x within hours',
+                                    'Fungal networks establish 50% faster',
+                                    'Disease suppression improves within 2 weeks',
+                                    'Nutrient cycling accelerates 3-5x'
+                                ]
+                            }
+                        ],
+                        
+                        tools: [
+                            { name: 'Soil Microscope', purpose: 'Count and identify organisms', link: 'soilfoodweb.com', cost: '$800-2000' },
+                            { name: 'pH/EC Meter', purpose: 'Monitor soil chemistry', link: 'hm-digital.com', cost: '$50-200' },
+                            { name: 'Penetrometer', purpose: 'Measure compaction', link: 'fieldscout.com', cost: '$200-400' },
+                            { name: 'Compost Tea Brewer', purpose: 'Brew liquid inoculants', link: 'keepingsimple.com', cost: '$150-500' }
+                        ],
+                        
+                        resources: [
+                            { title: 'Teaming with Microbes', author: 'Jeff Lowenfels', type: 'Book', description: 'Essential guide to soil biology' },
+                            { title: 'Soil Food Web School', provider: 'Dr. Elaine Ingham', type: 'Course', description: 'Professional soil biology training' },
+                            { title: 'NRCS Soil Health', provider: 'USDA', type: 'Free Resource', description: 'Government soil health guides' },
+                            { title: 'Rodale Institute', provider: 'rodaleinstitute.org', type: 'Research', description: '70+ years regenerative research' }
+                        ],
+                        
+                        keyTerms: ['Mycorrhizal fungi', 'Soil food web', 'Bacterial:fungal ratio', 'Glomalin', 'Aggregate stability', 'Carbon sequestration']
+                    },
+                    {
+                        id: 'soil-composting-2',
+                        title: 'Advanced Composting Systems & Nutrient Cycling',
+                        content: 'Master the science and practice of transforming waste into black gold through controlled decomposition.',
+                        
+                        detailedContent: `
+                            <h5>Thermophilic Composting Science</h5>
+                            <p>Proper composting harnesses microbial succession to create stable, nutrient-rich humus:</p>
+                            <ul>
+                                <li><strong>Mesophilic Phase (50-113°F):</strong> Initial bacterial colonization, rapid decomposition begins</li>
+                                <li><strong>Thermophilic Phase (113-160°F):</strong> Heat-loving bacteria dominate, pathogens/seeds destroyed</li>
+                                <li><strong>Cooling Phase:</strong> Fungi colonize, complex carbon compounds form</li>
+                                <li><strong>Curing Phase (6-12 months):</strong> Humus stabilizes, plant-available nutrients develop</li>
+                            </ul>
+                        `,
+                        
+                        strategies: [
+                            {
+                                name: 'Berkeley Hot Composting Method',
+                                description: 'Fast (18-day) hot composting for pathogen destruction',
+                                steps: [
+                                    'Build 3x3x3 foot minimum pile for heat retention',
+                                    'Achieve 30:1 C:N ratio (mix "browns" and "greens")',
+                                    'Maintain 50-60% moisture (squeeze test: few drops only)',
+                                    'Turn pile every 2-3 days to reintroduce oxygen',
+                                    'Monitor temperature daily (maintain 135-160°F)',
+                                    'Cure finished compost 2-4 weeks before application'
+                                ],
+                                expectedOutcomes: [
+                                    'Pathogen-free compost in 18 days',
+                                    '99.9% weed seed destruction',
+                                    '40-50% volume reduction',
+                                    'Stable, humus-rich final product'
+                                ]
+                            },
+                            {
+                                name: 'Vermiculture (Worm Composting)',
+                                description: 'Use red wiggler worms for high-quality castings',
+                                steps: [
+                                    'Set up worm bin with drainage and bedding (shredded cardboard/coir)',
+                                    'Add 1 lb red wigglers per sq ft of surface area',
+                                    'Feed kitchen scraps at 50% of worm weight per day',
+                                    'Maintain 60-80% moisture and 55-77°F temperature',
+                                    'Harvest castings every 3-6 months using light separation',
+                                    'Apply castings at 10-20 lbs per 100 sq ft'
+                                ],
+                                expectedOutcomes: [
+                                    'Castings with 5x more nitrogen than soil',
+                                    '7x more phosphorus, 11x more potassium',
+                                    'High concentrations of beneficial bacteria',
+                                    'Natural plant growth hormones included'
+                                ]
+                            },
+                            {
+                                name: 'Johnson-Su Bioreactor',
+                                description: 'Static aerated composting for maximum fungal development',
+                                steps: [
+                                    'Build 4x4 foot cylinder with perforated central air column',
+                                    'Layer carbon-rich materials (woodchips, straw, leaves)',
+                                    'Inoculate with diverse compost or forest soil',
+                                    'Maintain passive aeration (no turning) for 12 months',
+                                    'Extract and apply fungal-dominated compost',
+                                    'Use extract at 5 gallons per acre for soil inoculation'
+                                ],
+                                expectedOutcomes: [
+                                    'Fungal:bacterial ratio >1:1 (ideal for perennials)',
+                                    'Mycorrhizal spore counts 10-100x higher',
+                                    'Minimal nutrients but maximum biology',
+                                    'Scales from backyard to commercial farm'
+                                ]
+                            }
+                        ],
+                        
+                        tools: [
+                            { name: 'Compost Thermometer', purpose: '20" probe for core temp', link: 'reotemp.com', cost: '$30-60' },
+                            { name: 'Moisture Meter', purpose: 'Optimize water content', link: 'kelway.com', cost: '$150-300' },
+                            { name: 'Compost Turner', purpose: 'Aerate large piles', link: 'groundskeeper.com', cost: '$2000-5000' },
+                            { name: 'Worm Bin Kit', purpose: 'Vermicomposting setup', link: 'unclejimswormfarm.com', cost: '$80-200' }
+                        ],
+                        
+                        resources: [
+                            { title: 'The Compost Gardener', author: 'Stu Campbell', type: 'Book' },
+                            { title: 'Worms Eat My Garbage', author: 'Mary Appelhof', type: 'Book' },
+                            { title: 'Johnson-Su Reactor Plans', provider: 'NMSCU', type: 'Free Guide' },
+                            { title: 'Compost Science', provider: 'Cornell Waste Management', type: 'Online Course' }
+                        ],
+                        
+                        keyTerms: ['C:N ratio', 'Thermophilic', 'Vermicompost', 'Humus', 'Cation exchange capacity', 'Aerobic decomposition']
+                    }
+                ]
+            },
+            {
+                id: 'water-restoration-complete',
+                title: 'Water Cycle Restoration & Watershed Management',
+                description: 'Comprehensive water management from rainfall capture to aquifer recharge',
+                icon: '💧',
+                level: 'intermediate',
+                duration: '150 min',
+                xpReward: 250,
+                lessons: [
+                    {
+                        id: 'water-watershed-1',
+                        title: 'Watershed Anatomy & Hydrological Restoration',
+                        content: 'Every piece of land is part of a watershed - understanding this connectivity is key to water restoration.',
+                        
+                        detailedContent: `
+                            <h5>Watershed Principles</h5>
+                            <p>A watershed is all land that drains to a common point. Key concepts:</p>
+                            <ul>
+                                <li><strong>Topographic Divide:</strong> Ridge lines that separate watersheds</li>
+                                <li><strong>Stream Order:</strong> Classification system from headwaters (1st order) to major rivers (7th+ order)</li>
+                                <li><strong>Baseflow:</strong> Groundwater contribution to streams during dry periods</li>
+                                <li><strong>Peak Flow:</strong> Maximum discharge during storm events</li>
+                                <li><strong>Lag Time:</strong> Delay between rainfall and peak stream flow</li>
+                            </ul>
+                        `,
+                        
+                        strategies: [
+                            {
+                                name: 'Riparian Buffer Restoration',
+                                description: 'Re-establish vegetated corridors along waterways',
+                                steps: [
+                                    'Survey riparian zone: identify width, existing vegetation, erosion points',
+                                    'Design 3-zone buffer: Zone 1 (streambank) native trees/shrubs, Zone 2 (middle) managed forest, Zone 3 (upland) grass filter strip',
+                                    'Remove invasive species via mechanical or targeted herbicide treatment',
+                                    'Plant native species: willows/alders nearest water, oaks/maples mid-zone, grasses outer zone',
+                                    'Install bioengineering: live stakes, fascines, brush mattresses for bank stability',
+                                    'Protect with fencing if livestock present, maintain for 3-5 years until established'
+                                ],
+                                expectedOutcomes: [
+                                    '70-90% reduction in nutrient runoff',
+                                    '50-80% reduction in sediment delivery',
+                                    'Stream temperature reduction of 5-10°F',
+                                    'Aquatic habitat quality improvement within 2 years',
+                                    'Bank erosion rate reduction by 60-80%'
+                                ]
+                            },
+                            {
+                                name: 'Keyline Water Management',
+                                description: 'PA Yeomans system for optimal water distribution',
+                                steps: [
+                                    'Identify keypoint: where primary valley slope changes from steep to gentle',
+                                    'Survey keyline: horizontal line through keypoint',
+                                    'Design parallel keyline cultivation patterns above and below keyline',
+                                    'Install keyline plowing: rip along contour with slight off-contour grade (1:400) to spread water',
+                                    'Create keyline dams at valley heads to capture and slow water',
+                                    'Establish deep-rooted perennials along keylines to enhance infiltration'
+                                ],
+                                expectedOutcomes: [
+                                    'Soil moisture increase of 30-50% across landscape',
+                                    'Reduced need for irrigation by 40-60%',
+                                    'Even distribution of water from wet to dry areas',
+                                    'Increased pasture productivity by 200-400%',
+                                    'Groundwater recharge boost of 20-40%'
+                                ]
+                            }
+                        ],
+                        
+                        tools: [
+                            { name: 'Laser Level/Transit', purpose: 'Survey elevation for water design', cost: '$300-1500' },
+                            { name: 'GPS Mapping Unit', purpose: 'Map watershed features', cost: '$200-800' },
+                            { name: 'Stream Flow Meter', purpose: 'Monitor discharge rates', cost: '$500-2000' },
+                            { name: 'Water Quality Test Kit', purpose: 'Test pH, DO, nutrients', cost: '$150-500' }
+                        ],
+                        
+                        resources: [
+                            { title: 'Water for Every Farm', author: 'PA Yeomans', type: 'Book' },
+                            { title: 'Riparian Forest Buffers', provider: 'USDA NRCS', type: 'Technical Guide' },
+                            { title: 'Watershed Management Course', provider: 'EPA', type: 'Free Online Course' },
+                            { title: 'Stream Restoration Network', provider: 'restore.org', type: 'Professional Network' }
+                        ],
+                        
+                        keyTerms: ['Watershed', 'Riparian zone', 'Keyline', 'Baseflow', 'Infiltration rate', 'Aquifer recharge']
+                    }
+                ]
+            }
+        ];
+        
+        // QUIZ BANK - COMPREHENSIVE
+        const quizBank = {
+            'soil-micro-1': {
+                en: [
+                    {
+                        question: "What is the approximate number of microorganisms in a teaspoon of healthy soil?",
+                        options: [
+                            "More than 1 million",
+                            "More than the human population of Earth",
+                            "About 100,000",
+                            "Exactly 1 billion"
+                        ],
+                        correct: 1,
+                        explanation: "A single teaspoon of healthy soil contains more microorganisms than there are people on Earth - typically 1-10 billion bacteria plus millions of fungi, protozoa, and other organisms."
+                    },
+                    {
+                        question: "What is the primary benefit of mycorrhizal fungi for plants?",
+                        options: [
+                            "They produce oxygen for plant roots",
+                            "They extend the root system and improve nutrient/water uptake by up to 400%",
+                            "They protect against all diseases",
+                            "They fix nitrogen from the atmosphere"
+                        ],
+                        correct: 1,
+                        explanation: "Mycorrhizal fungi form symbiotic relationships with plant roots, extending the effective root system by up to 100x and dramatically improving nutrient and water uptake efficiency."
+                    },
+                    {
+                        question: "What does a bacterial:fungal ratio greater than 1:1 indicate?",
+                        options: [
+                            "Soil is ideal for annual vegetables",
+                            "Soil is ideal for perennial trees and shrubs",
+                            "Soil is completely dead",
+                            "Soil has too much nitrogen"
+                        ],
+                        correct: 0,
+                        explanation: "Bacterial-dominated soils (ratio > 1:1) favor annual plants and vegetables, while fungal-dominated soils (ratio < 1:1) better support perennial plants, shrubs, and trees."
+                    }
+                ],
+                es: [
+                    {
+                        question: "¿Cuántos microorganismos hay aproximadamente en una cucharadita de suelo sano?",
+                        options: [
+                            "Más de 1 millón",
+                            "Más que la población humana de la Tierra",
+                            "Alrededor de 100,000",
+                            "Exactamente 1 mil millones"
+                        ],
+                        correct: 1,
+                        explanation: "Una sola cucharadita de suelo sano contiene más microorganismos que personas en la Tierra: típicamente 1-10 mil millones de bacterias más millones de hongos, protozoos y otros organismos."
+                    }
+                ]
+            },
+            'soil-composting-2': {
+                en: [
+                    {
+                        question: "What is the ideal carbon to nitrogen (C:N) ratio for hot composting?",
+                        options: [
+                            "10:1",
+                            "30:1",
+                            "100:1",
+                            "1:1"
+                        ],
+                        correct: 1,
+                        explanation: "The ideal C:N ratio for hot composting is approximately 30:1, providing the perfect balance for microorganisms to efficiently break down organic matter while generating heat."
+                    },
+                    {
+                        question: "What temperature range indicates the thermophilic phase of composting?",
+                        options: [
+                            "50-70°F",
+                            "80-100°F",
+                            "113-160°F",
+                            "170-200°F"
+                        ],
+                        correct: 2,
+                        explanation: "The thermophilic phase occurs at 113-160°F, where heat-loving bacteria dominate and temperatures are high enough to destroy pathogens and weed seeds."
+                    },
+                    {
+                        question: "How much more nitrogen do worm castings contain compared to regular soil?",
+                        options: [
+                            "Same amount",
+                            "2x more",
+                            "5x more",
+                            "10x more"
+                        ],
+                        correct: 2,
+                        explanation: "Vermicompost (worm castings) contains approximately 5x more nitrogen than regular soil, plus 7x more phosphorus and 11x more potassium, along with beneficial bacteria and growth hormones."
+                    }
+                ]
+            },
+            'water-watershed-1': {
+                en: [
+                    {
+                        question: "What percentage reduction in nutrient runoff can a properly designed riparian buffer achieve?",
+                        options: [
+                            "10-20%",
+                            "30-40%",
+                            "70-90%",
+                            "100%"
+                        ],
+                        correct: 2,
+                        explanation: "Well-designed riparian buffers can reduce nutrient runoff by 70-90% through plant uptake, soil absorption, and biological processing, significantly improving water quality."
+                    },
+                    {
+                        question: "In the Keyline water management system, what is the 'keypoint'?",
+                        options: [
+                            "The highest point on the property",
+                            "Where the primary valley slope changes from steep to gentle",
+                            "The lowest point where water collects",
+                            "Any point along a stream"
+                        ],
+                        correct: 1,
+                        explanation: "The keypoint is where the primary valley slope transitions from steep to gentle - this critical location determines the keyline from which the entire water management system is designed."
+                    }
+                ]
+            }
+        };
+        
+        // QUIZ SYSTEM
+        let currentQuiz = {
+            lessonId: null,
+            questions: [],
+            currentQuestion: 0,
+            answers: [],
+            score: 0
+        };
+        
+        function startQuiz(lessonId) {
+            const questions = quizBank[lessonId]?.[currentLang] || quizBank[lessonId]?.en;
+            if (!questions || questions.length === 0) {
+                alert('Quiz coming soon for this lesson!');
+                return;
+            }
+            
+            currentQuiz = {
+                lessonId,
+                questions: shuffleArray([...questions]),
+                currentQuestion: 0,
+                answers: [],
+                score: 0
+            };
+            
+            renderQuiz();
+            document.getElementById('quiz-modal').classList.add('active');
+        }
+        
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        function renderQuiz() {
+            const container = document.getElementById('quiz-questions-container');
+            const resultsDiv = document.getElementById('quiz-results');
+            const q = currentQuiz.questions[currentQuiz.currentQuestion];
+            const questionNum = currentQuiz.currentQuestion + 1;
+            const total = currentQuiz.questions.length;
+            
+            // Update progress
+            document.getElementById('quiz-progress').style.width = `${(questionNum / total) * 100}%`;
+            document.getElementById('quiz-subtitle').textContent = `Question ${questionNum} of ${total}`;
+            
+            resultsDiv.classList.remove('show');
+            
+            container.innerHTML = `
+                <div class="question-text">${q.question}</div>
+                <div style="margin-top: 24px;">
+                    ${q.options.map((opt, i) => `
+                        <div class="quiz-option" data-index="${i}" onclick="selectAnswer(${i})">${opt}</div>
+                    `).join('')}
+                </div>
+                <div class="quiz-feedback" id="quiz-feedback"></div>
+                <div class="quiz-actions">
+                    <button class="quiz-btn-secondary" onclick="closeQuiz()">Close</button>
+                    <button class="quiz-btn-primary" id="check-btn" onclick="checkAnswer()" disabled>Check Answer</button>
+                </div>
+            `;
+        }
+        
+        function selectAnswer(index) {
+            document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.quiz-option')[index].classList.add('selected');
+            currentQuiz.answers[currentQuiz.currentQuestion] = index;
+            document.getElementById('check-btn').disabled = false;
+        }
+        
+        function checkAnswer() {
+            const q = currentQuiz.questions[currentQuiz.currentQuestion];
+            const userAnswer = currentQuiz.answers[currentQuiz.currentQuestion];
+            const isCorrect = userAnswer === q.correct;
+            
+            if (isCorrect) currentQuiz.score++;
+            
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.className = `quiz-feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ Correct! Excellent work!' : '✗ Not quite right.'}</strong>
+                <p style="margin-top: 8px;">${q.explanation}</p>
+            `;
+            
+            document.querySelectorAll('.quiz-option').forEach((el, i) => {
+                el.classList.add('disabled');
+                if (i === q.correct) el.classList.add('correct');
+                else if (i === userAnswer && !isCorrect) el.classList.add('incorrect');
+            });
+            
+            document.getElementById('check-btn').textContent = currentQuiz.currentQuestion < currentQuiz.questions.length - 1 ? 'Next Question' : 'See Results';
+            document.getElementById('check-btn').onclick = nextQuestion;
+        }
+        
+        function nextQuestion() {
+            currentQuiz.currentQuestion++;
+            if (currentQuiz.currentQuestion < currentQuiz.questions.length) {
+                renderQuiz();
+            } else {
+                showQuizResults();
+            }
+        }
+        
+        function showQuizResults() {
+            const container = document.getElementById('quiz-questions-container');
+            const resultsDiv = document.getElementById('quiz-results');
+            const scorePercent = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
+            const xpEarned = Math.round(scorePercent * 0.75);
+            
+            container.innerHTML = '';
+            resultsDiv.classList.add('show');
+            
+            document.getElementById('quiz-final-score').textContent = `${scorePercent}%`;
+            document.getElementById('quiz-correct').textContent = currentQuiz.score;
+            document.getElementById('quiz-incorrect').textContent = currentQuiz.questions.length - currentQuiz.score;
+            document.getElementById('quiz-xp-earned').textContent = xpEarned;
+            
+            gamification.addXP(xpEarned);
+            if (scorePercent >= 70) {
+                gamification.completeLesson(currentQuiz.lessonId);
+            }
+            
+            if (scorePercent === 100) {
+                alert('🌟 Perfect Score! You truly mastered this material!');
+            }
+        }
+        
+        function retakeQuiz() {
+            startQuiz(currentQuiz.lessonId);
+        }
+        
+        function closeQuiz() {
+            document.getElementById('quiz-modal').classList.remove('active');
+        }
+        
+        // MODULE RENDERING
+        function renderModules(filter = 'all') {
+            const container = document.getElementById('modules-container');
+            container.innerHTML = '';
+            
+            const filtered = filter === 'all' ? modules : modules.filter(m => m.level === filter);
+            
+            filtered.forEach(module => {
+                const completedCount = module.lessons.filter(l => 
+                    gamification.completedLessons.includes(l.id)
+                ).length;
+                const progress = Math.round((completedCount / module.lessons.length) * 100);
+                
+                const el = document.createElement('div');
+                el.className = 'module';
+                el.dataset.id = module.id;
+                
+                el.innerHTML = `
+                    <div class="module-header" onclick="toggleModule('${module.id}')">
+                        <div class="module-title">
+                            <div class="module-icon">${module.icon}</div>
+                            <div style="flex: 1;">
+                                <h3>${module.title}</h3>
+                                <div class="module-meta">
+                                    <span>📊 ${module.level}</span>
+                                    <span>⏱️ ${module.duration}</span>
+                                    <span>⭐ ${module.xpReward} XP</span>
+                                    <span>📚 ${module.lessons.length} lessons</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-success);">${progress}%</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary);">Complete</div>
+                            </div>
+                            <span class="chevron">▼</span>
+                        </div>
+                    </div>
+                    <div class="module-content">
+                        <div class="module-body">
+                            <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 24px;">${module.description}</p>
+                            ${module.lessons.map(lesson => renderLesson(lesson)).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(el);
+            });
+        }
+        
+        function renderLesson(lesson) {
+            const isCompleted = gamification.completedLessons.includes(lesson.id);
+            
+            return `
+                <div class="lesson">
+                    <h4>${isCompleted ? '✅ ' : ''}${lesson.title}</h4>
+                    <p style="margin-top: 12px; line-height: 1.7;">${lesson.content}</p>
+                    
+                    ${lesson.detailedContent ? `
+                        <div class="lesson-section">
+                            ${lesson.detailedContent}
+                        </div>
+                    ` : ''}
+                    
+                    ${lesson.strategies ? `
+                        <div class="lesson-section">
+                            <h5>🎯 Implementation Strategies</h5>
+                            ${lesson.strategies.map(strategy => `
+                                <div class="implementation-steps" style="margin-top: 16px;">
+                                    <h6 style="color: var(--accent-primary); margin-bottom: 8px;">${strategy.name}</h6>
+                                    <p style="margin-bottom: 12px;"><em>${strategy.description}</em></p>
+                                    <strong>Steps:</strong>
+                                    <ol style="margin: 8px 0 12px 20px;">
+                                        ${strategy.steps.map(step => `<li style="margin-bottom: 6px;">${step}</li>`).join('')}
+                                    </ol>
+                                    ${strategy.expectedOutcomes ? `
+                                        <strong>Expected Outcomes:</strong>
+                                        <ul style="margin: 8px 0 0 20px;">
+                                            ${strategy.expectedOutcomes.map(outcome => `<li style="margin-bottom: 4px;">${outcome}</li>`).join('')}
+                                        </ul>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    ${lesson.tools ? `
+                        <div class="lesson-section">
+                            <h5>🛠️ Tools & Equipment</h5>
+                            <div class="tools-resources">
+                                ${lesson.tools.map(tool => `
+                                    <div style="margin-bottom: 12px; padding: 12px; background: var(--bg-secondary); border-radius: 6px;">
+                                        <strong>${tool.name}</strong> - ${tool.purpose}
+                                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+                                            Cost: ${tool.cost} ${tool.link ? `| <a href="https://${tool.link}" class="resource-link" target="_blank">More info</a>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${lesson.resources ? `
+                        <div class="lesson-section">
+                            <h5>📚 Learning Resources</h5>
+                            <div class="tools-resources">
+                                ${lesson.resources.map(resource => `
+                                    <div style="margin-bottom: 12px;">
+                                        <strong>${resource.title}</strong> by ${resource.author || resource.provider}
+                                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 4px;">
+                                            ${resource.type}${resource.description ? ` - ${resource.description}` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${lesson.keyTerms ? `
+                        <div style="margin-top: 16px;">
+                            <strong style="display: block; margin-bottom: 8px;">Key Terms:</strong>
+                            <div class="key-terms">
+                                ${lesson.keyTerms.map(term => `<span class="key-term">${term}</span>`).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <button class="quiz-btn" onclick="startQuiz('${lesson.id}')">📝 Practice Quiz - Test Your Knowledge</button>
+                </div>
+            `;
+        }
+        
+        function toggleModule(id) {
+            const module = document.querySelector(`[data-id="${id}"]`);
+            module.classList.toggle('expanded');
+        }
+        
+        function filterModules(level) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderModules(level);
+        }
+        
+        // SEARCH
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.module').forEach(module => {
+                const text = module.textContent.toLowerCase();
+                module.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        });
+        
+        // TEACHER TOOLS
+        function exportForTeachers() {
+            const data = { modules, quizBank, translations, gamification: { xp: gamification.xp, level: gamification.level }};
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'planetary-restoration-complete-package.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('📦 Complete package exported! Edit the JSON to customize content, then re-import.');
+        }
+        
+        function exportQuizBank() {
+            const blob = new Blob([JSON.stringify(quizBank, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'quiz-bank.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function showCustomizationGuide() {
+            alert(`📖 CUSTOMIZATION GUIDE
+
+1. ADDING CONTENT:
+   - Edit the 'modules' array to add new lessons
+   - Each lesson can include: content, detailedContent, strategies, tools, resources, keyTerms
+   
+2. CREATING QUIZZES:
+   - Add questions to 'quizBank' object using lesson IDs
+   - Include multiple language versions
+   
+3. STYLING:
+   - Modify CSS variables in :root for colors/spacing
+   - Change icons using any emoji
+   
+4. DEPLOYMENT:
+   - Save as .html file
+   - No server needed - runs entirely in browser
+   - Students' progress saves automatically
+
+Need help? All code is heavily commented!`);
+        }
+        
+        function exportHTML() {
+            const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'planetary-restoration-system.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // CONSTELLATION BACKGROUND
+        function initConstellation() {
+            const canvas = document.getElementById('constellation-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2,
+                    radius: Math.random() * 2 + 1
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+                    
+                    ctx.fillStyle = 'rgba(147, 197, 253, 0.4)';
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw connections
+                    particles.slice(i + 1).forEach(p2 => {
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 150) {
+                            ctx.strokeStyle = `rgba(147, 197, 253, ${(1 - dist / 150) * 0.15})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    });
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+            
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+        
+        // INITIALIZATION
+        async function init() {
+            await initDB();
+            await gamification.init();
+            renderModules();
+            initConstellation();
+            console.log('🌍 Planetary Restoration Learning System initialized');
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
