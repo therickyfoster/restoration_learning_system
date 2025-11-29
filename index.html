@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cosmic-night">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planetary Restoration Learning System | Comprehensive Edition</title>
+    <meta name="description" content="Comprehensive interactive learning platform for planetary stewardship and ecological restoration">
+    <meta name="theme-color" content="#0a0e27">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUGxhbmV0YXJ5IFJlc3RvcmF0aW9uIExlYXJuaW5nIFN5c3RlbSIsInNob3J0X25hbWUiOiJQUkxTIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwYTBlMjciLCJ0aGVtZV9jb2xvciI6IiMwYTBlMjcifQ==">
+    
+    <!-- 
+    ╔══════════════════════════════════════════════════════════════════════════════╗
+    ║  PLANETARY RESTORATION LEARNING SYSTEM                                        ║
+    ║  Comprehensive Edition v2.0                                                   ║
+    ║                                                                               ║
+    ║  ZERO-HARM COMMITMENT:                                                        ║
+    ║  This platform exists solely to promote ecological literacy, planetary        ║
+    ║  stewardship, and regenerative practices. No component may be repurposed      ║
+    ║  for surveillance, manipulation, ecological harm, or violation of rights.     ║
+    ║                                                                               ║
+    ║  ANTI-INVERSION SAFEGUARD:                                                    ║
+    ║  Design patterns prioritize: transparency, accessibility, user autonomy,      ║
+    ║  offline capability, and local-first data storage. No hidden telemetry.       ║
+    ║                                                                               ║
+    ║  LICENSE: Educational content under CC BY-SA 4.0                              ║
+    ║  PROVENANCE: Planetary Restoration Archive | planetaryrestorationarchive.com ║
+    ╚══════════════════════════════════════════════════════════════════════════════╝
+    -->
+
+    <style>
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: CSS CUSTOM PROPERTIES & THEME SYSTEM
+          PURPOSE: 20+ themes via CSS variables with auto-detection
+          EXTEND: Add new themes by copying a theme block and modifying values
+          OUTCOME: Instant theme switching without page reload
+        ═══════════════════════════════════════════════════════════════════════════*/
+        
+        :root {
+            /* Base spacing and typography */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --font-body: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, sans-serif;
+            --font-heading: Georgia, 'Times New Roman', serif;
+            --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Theme 1: Cosmic Night (Default Dark) */
+        [data-theme="cosmic-night"] {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --bg-card: #242942;
+            --bg-elevated: #2d3454;
+            --text-primary: #e0e7ff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --accent-info: #06b6d4;
+            --border-color: #334155;
+            --border-focus: #3b82f6;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --gradient-primary: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --gradient-success: linear-gradient(135deg, #10b981, #34d399);
+            --constellation-color: rgba(147, 197, 253, 0.4);
+            --constellation-line: rgba(147, 197, 253, 0.15);
+        }
+
+        /* Theme 2: Forest Dawn (Nature Light) */
+        [data-theme="forest-dawn"] {
+            --bg-primary: #f0fdf4;
+            --bg-secondary: #dcfce7;
+            --bg-card: #ffffff;
+            --bg-elevated: #f8fafc;
+            --text-primary: #14532d;
+            --text-secondary: #166534;
+            --text-muted: #4ade80;
+            --accent-primary: #16a34a;
+            --accent-secondary: #15803d;
+            --accent-success: #22c55e;
+            --accent-warning: #ca8a04;
+            --accent-danger: #dc2626;
+            --accent-info: #0284c7;
+            --border-color: #86efac;
+            --border-focus: #16a34a;
+            --shadow-color: rgba(22, 163, 74, 0.15);
+            --gradient-primary: linear-gradient(135deg, #16a34a, #22c55e);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(22, 163, 74, 0.5);
+            --constellation-line: rgba(22, 163, 74, 0.2);
+        }
+
+        /* Theme 3: Ocean Depths (Blue Dark) */
+        [data-theme="ocean-depths"] {
+            --bg-primary: #0c1929;
+            --bg-secondary: #0f2744;
+            --bg-card: #1a3a5c;
+            --bg-elevated: #234b73;
+            --text-primary: #e0f2fe;
+            --text-secondary: #7dd3fc;
+            --text-muted: #38bdf8;
+            --accent-primary: #0ea5e9;
+            --accent-secondary: #0284c7;
+            --accent-success: #14b8a6;
+            --accent-warning: #fbbf24;
+            --accent-danger: #f43f5e;
+            --accent-info: #22d3ee;
+            --border-color: #0369a1;
+            --border-focus: #0ea5e9;
+            --shadow-color: rgba(14, 165, 233, 0.25);
+            --gradient-primary: linear-gradient(135deg, #0ea5e9, #22d3ee);
+            --gradient-success: linear-gradient(135deg, #14b8a6, #2dd4bf);
+            --constellation-color: rgba(125, 211, 252, 0.5);
+            --constellation-line: rgba(125, 211, 252, 0.2);
+        }
+
+        /* Theme 4: Desert Sunset (Warm Light) */
+        [data-theme="desert-sunset"] {
+            --bg-primary: #fef3c7;
+            --bg-secondary: #fde68a;
+            --bg-card: #fffbeb;
+            --bg-elevated: #ffffff;
+            --text-primary: #78350f;
+            --text-secondary: #92400e;
+            --text-muted: #b45309;
+            --accent-primary: #d97706;
+            --accent-secondary: #ea580c;
+            --accent-success: #65a30d;
+            --accent-warning: #dc2626;
+            --accent-danger: #b91c1c;
+            --accent-info: #0891b2;
+            --border-color: #fcd34d;
+            --border-focus: #d97706;
+            --shadow-color: rgba(217, 119, 6, 0.2);
+            --gradient-primary: linear-gradient(135deg, #f59e0b, #ea580c);
+            --gradient-success: linear-gradient(135deg, #84cc16, #65a30d);
+            --constellation-color: rgba(234, 88, 12, 0.4);
+            --constellation-line: rgba(234, 88, 12, 0.15);
+        }
+
+        /* Theme 5: Aurora Borealis (Vibrant Dark) */
+        [data-theme="aurora-borealis"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e3a5f;
+            --bg-elevated: #2d4a6f;
+            --text-primary: #f0fdfa;
+            --text-secondary: #99f6e4;
+            --text-muted: #5eead4;
+            --accent-primary: #2dd4bf;
+            --accent-secondary: #a78bfa;
+            --accent-success: #34d399;
+            --accent-warning: #fbbf24;
+            --accent-danger: #f87171;
+            --accent-info: #38bdf8;
+            --border-color: #14b8a6;
+            --border-focus: #2dd4bf;
+            --shadow-color: rgba(45, 212, 191, 0.3);
+            --gradient-primary: linear-gradient(135deg, #2dd4bf, #a78bfa, #f472b6);
+            --gradient-success: linear-gradient(135deg, #34d399, #2dd4bf);
+            --constellation-color: rgba(167, 139, 250, 0.5);
+            --constellation-line: rgba(45, 212, 191, 0.25);
+        }
+
+        /* Theme 6: Volcanic Ember (Red Dark) */
+        [data-theme="volcanic-ember"] {
+            --bg-primary: #1c1012;
+            --bg-secondary: #2d1a1e;
+            --bg-card: #3d2428;
+            --bg-elevated: #4d2e32;
+            --text-primary: #fef2f2;
+            --text-secondary: #fca5a5;
+            --text-muted: #f87171;
+            --accent-primary: #ef4444;
+            --accent-secondary: #dc2626;
+            --accent-success: #22c55e;
+            --accent-warning: #f59e0b;
+            --accent-danger: #b91c1c;
+            --accent-info: #38bdf8;
+            --border-color: #991b1b;
+            --border-focus: #ef4444;
+            --shadow-color: rgba(239, 68, 68, 0.3);
+            --gradient-primary: linear-gradient(135deg, #ef4444, #f97316);
+            --gradient-success: linear-gradient(135deg, #22c55e, #34d399);
+            --constellation-color: rgba(248, 113, 113, 0.5);
+            --constellation-line: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Theme 7: Lavender Fields (Purple Light) */
+        [data-theme="lavender-fields"] {
+            --bg-primary: #faf5ff;
+            --bg-secondary: #f3e8ff;
+            --bg-card: #ffffff;
+            --bg-elevated: #fefcff;
+            --text-primary: #581c87;
+            --text-secondary: #7e22ce;
+            --text-muted: #a855f7;
+            --accent-primary: #9333ea;
+            --accent-secondary: #7c3aed;
+            --accent-success: #16a34a;
+            --accent-warning: #ea580c;
+            --accent-danger: #dc2626;
+            --accent-info: #0891b2;
+            --border-color: #d8b4fe;
+            --border-focus: #9333ea;
+            --shadow-color: rgba(147, 51, 234, 0.15);
+            --gradient-primary: linear-gradient(135deg, #9333ea, #c084fc);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(168, 85, 247, 0.4);
+            --constellation-line: rgba(147, 51, 234, 0.15);
+        }
+
+        /* Theme 8: Midnight Garden (Teal Dark) */
+        [data-theme="midnight-garden"] {
+            --bg-primary: #042f2e;
+            --bg-secondary: #0d4744;
+            --bg-card: #115e59;
+            --bg-elevated: #1a7570;
+            --text-primary: #f0fdfa;
+            --text-secondary: #5eead4;
+            --text-muted: #2dd4bf;
+            --accent-primary: #14b8a6;
+            --accent-secondary: #0d9488;
+            --accent-success: #22c55e;
+            --accent-warning: #fbbf24;
+            --accent-danger: #f43f5e;
+            --accent-info: #38bdf8;
+            --border-color: #0f766e;
+            --border-focus: #14b8a6;
+            --shadow-color: rgba(20, 184, 166, 0.3);
+            --gradient-primary: linear-gradient(135deg, #14b8a6, #22d3ee);
+            --gradient-success: linear-gradient(135deg, #22c55e, #34d399);
+            --constellation-color: rgba(94, 234, 212, 0.5);
+            --constellation-line: rgba(20, 184, 166, 0.25);
+        }
+
+        /* Theme 9: Arctic Frost (Cool Light) */
+        [data-theme="arctic-frost"] {
+            --bg-primary: #f0f9ff;
+            --bg-secondary: #e0f2fe;
+            --bg-card: #ffffff;
+            --bg-elevated: #f8fafc;
+            --text-primary: #0c4a6e;
+            --text-secondary: #0369a1;
+            --text-muted: #0ea5e9;
+            --accent-primary: #0284c7;
+            --accent-secondary: #0369a1;
+            --accent-success: #059669;
+            --accent-warning: #d97706;
+            --accent-danger: #dc2626;
+            --accent-info: #0891b2;
+            --border-color: #7dd3fc;
+            --border-focus: #0284c7;
+            --shadow-color: rgba(2, 132, 199, 0.12);
+            --gradient-primary: linear-gradient(135deg, #0284c7, #38bdf8);
+            --gradient-success: linear-gradient(135deg, #10b981, #34d399);
+            --constellation-color: rgba(56, 189, 248, 0.5);
+            --constellation-line: rgba(2, 132, 199, 0.15);
+        }
+
+        /* Theme 10: Sahara Dusk (Earthy Warm) */
+        [data-theme="sahara-dusk"] {
+            --bg-primary: #292018;
+            --bg-secondary: #3d2f22;
+            --bg-card: #4d3c2c;
+            --bg-elevated: #5d4a38;
+            --text-primary: #fef3e2;
+            --text-secondary: #fed7aa;
+            --text-muted: #fdba74;
+            --accent-primary: #ea580c;
+            --accent-secondary: #c2410c;
+            --accent-success: #65a30d;
+            --accent-warning: #fbbf24;
+            --accent-danger: #dc2626;
+            --accent-info: #0891b2;
+            --border-color: #92400e;
+            --border-focus: #ea580c;
+            --shadow-color: rgba(234, 88, 12, 0.25);
+            --gradient-primary: linear-gradient(135deg, #ea580c, #facc15);
+            --gradient-success: linear-gradient(135deg, #84cc16, #a3e635);
+            --constellation-color: rgba(253, 186, 116, 0.5);
+            --constellation-line: rgba(234, 88, 12, 0.2);
+        }
+
+        /* Theme 11: Moss Stone (Natural Neutral) */
+        [data-theme="moss-stone"] {
+            --bg-primary: #1a1c1a;
+            --bg-secondary: #2a2d2a;
+            --bg-card: #3a3e3a;
+            --bg-elevated: #4a4e4a;
+            --text-primary: #ecfdf5;
+            --text-secondary: #a7f3d0;
+            --text-muted: #6ee7b7;
+            --accent-primary: #059669;
+            --accent-secondary: #047857;
+            --accent-success: #22c55e;
+            --accent-warning: #eab308;
+            --accent-danger: #ef4444;
+            --accent-info: #06b6d4;
+            --border-color: #047857;
+            --border-focus: #059669;
+            --shadow-color: rgba(5, 150, 105, 0.25);
+            --gradient-primary: linear-gradient(135deg, #059669, #10b981);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(110, 231, 183, 0.45);
+            --constellation-line: rgba(5, 150, 105, 0.2);
+        }
+
+        /* Theme 12: Cherry Blossom (Pink Light) */
+        [data-theme="cherry-blossom"] {
+            --bg-primary: #fff1f2;
+            --bg-secondary: #ffe4e6;
+            --bg-card: #ffffff;
+            --bg-elevated: #fef9fa;
+            --text-primary: #881337;
+            --text-secondary: #be123c;
+            --text-muted: #f43f5e;
+            --accent-primary: #e11d48;
+            --accent-secondary: #be123c;
+            --accent-success: #16a34a;
+            --accent-warning: #d97706;
+            --accent-danger: #b91c1c;
+            --accent-info: #0891b2;
+            --border-color: #fda4af;
+            --border-focus: #e11d48;
+            --shadow-color: rgba(225, 29, 72, 0.12);
+            --gradient-primary: linear-gradient(135deg, #e11d48, #fb7185);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(251, 113, 133, 0.5);
+            --constellation-line: rgba(225, 29, 72, 0.15);
+        }
+
+        /* Theme 13: Deep Space (Ultra Dark) */
+        [data-theme="deep-space"] {
+            --bg-primary: #030712;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --bg-elevated: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #6366f1;
+            --accent-secondary: #4f46e5;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --accent-info: #06b6d4;
+            --border-color: #334155;
+            --border-focus: #6366f1;
+            --shadow-color: rgba(99, 102, 241, 0.2);
+            --gradient-primary: linear-gradient(135deg, #6366f1, #a855f7);
+            --gradient-success: linear-gradient(135deg, #10b981, #34d399);
+            --constellation-color: rgba(165, 180, 252, 0.4);
+            --constellation-line: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Theme 14: Sunflower Meadow (Yellow Light) */
+        [data-theme="sunflower-meadow"] {
+            --bg-primary: #fefce8;
+            --bg-secondary: #fef9c3;
+            --bg-card: #ffffff;
+            --bg-elevated: #fefdf8;
+            --text-primary: #713f12;
+            --text-secondary: #a16207;
+            --text-muted: #ca8a04;
+            --accent-primary: #eab308;
+            --accent-secondary: #ca8a04;
+            --accent-success: #16a34a;
+            --accent-warning: #ea580c;
+            --accent-danger: #dc2626;
+            --accent-info: #0891b2;
+            --border-color: #fde047;
+            --border-focus: #eab308;
+            --shadow-color: rgba(234, 179, 8, 0.15);
+            --gradient-primary: linear-gradient(135deg, #eab308, #facc15);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(250, 204, 21, 0.5);
+            --constellation-line: rgba(234, 179, 8, 0.2);
+        }
+
+        /* Theme 15: Stormy Twilight (Gray Dark) */
+        [data-theme="stormy-twilight"] {
+            --bg-primary: #18181b;
+            --bg-secondary: #27272a;
+            --bg-card: #3f3f46;
+            --bg-elevated: #52525b;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-primary: #a1a1aa;
+            --accent-secondary: #71717a;
+            --accent-success: #22c55e;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --accent-info: #06b6d4;
+            --border-color: #52525b;
+            --border-focus: #a1a1aa;
+            --shadow-color: rgba(161, 161, 170, 0.15);
+            --gradient-primary: linear-gradient(135deg, #71717a, #a1a1aa);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(161, 161, 170, 0.4);
+            --constellation-line: rgba(113, 113, 122, 0.2);
+        }
+
+        /* Theme 16: Rainforest Canopy (Deep Green) */
+        [data-theme="rainforest-canopy"] {
+            --bg-primary: #052e16;
+            --bg-secondary: #14532d;
+            --bg-card: #166534;
+            --bg-elevated: #15803d;
+            --text-primary: #f0fdf4;
+            --text-secondary: #bbf7d0;
+            --text-muted: #86efac;
+            --accent-primary: #22c55e;
+            --accent-secondary: #16a34a;
+            --accent-success: #4ade80;
+            --accent-warning: #fbbf24;
+            --accent-danger: #f43f5e;
+            --accent-info: #38bdf8;
+            --border-color: #15803d;
+            --border-focus: #22c55e;
+            --shadow-color: rgba(34, 197, 94, 0.3);
+            --gradient-primary: linear-gradient(135deg, #22c55e, #4ade80);
+            --gradient-success: linear-gradient(135deg, #4ade80, #86efac);
+            --constellation-color: rgba(134, 239, 172, 0.5);
+            --constellation-line: rgba(34, 197, 94, 0.25);
+        }
+
+        /* Theme 17: Coral Reef (Warm Aqua) */
+        [data-theme="coral-reef"] {
+            --bg-primary: #fef7f0;
+            --bg-secondary: #ffedd5;
+            --bg-card: #ffffff;
+            --bg-elevated: #fffbf5;
+            --text-primary: #7c2d12;
+            --text-secondary: #c2410c;
+            --text-muted: #ea580c;
+            --accent-primary: #f97316;
+            --accent-secondary: #0891b2;
+            --accent-success: #059669;
+            --accent-warning: #d97706;
+            --accent-danger: #dc2626;
+            --accent-info: #0e7490;
+            --border-color: #fed7aa;
+            --border-focus: #f97316;
+            --shadow-color: rgba(249, 115, 22, 0.15);
+            --gradient-primary: linear-gradient(135deg, #f97316, #22d3ee);
+            --gradient-success: linear-gradient(135deg, #10b981, #34d399);
+            --constellation-color: rgba(249, 115, 22, 0.4);
+            --constellation-line: rgba(8, 145, 178, 0.2);
+        }
+
+        /* Theme 18: Nebula Violet (Purple Dark) */
+        [data-theme="nebula-violet"] {
+            --bg-primary: #1e1033;
+            --bg-secondary: #2d1b4e;
+            --bg-card: #3d2669;
+            --bg-elevated: #4c3180;
+            --text-primary: #f5f3ff;
+            --text-secondary: #c4b5fd;
+            --text-muted: #a78bfa;
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #7c3aed;
+            --accent-success: #22c55e;
+            --accent-warning: #fbbf24;
+            --accent-danger: #f43f5e;
+            --accent-info: #38bdf8;
+            --border-color: #6d28d9;
+            --border-focus: #8b5cf6;
+            --shadow-color: rgba(139, 92, 246, 0.3);
+            --gradient-primary: linear-gradient(135deg, #8b5cf6, #c084fc);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(196, 181, 253, 0.5);
+            --constellation-line: rgba(139, 92, 246, 0.25);
+        }
+
+        /* Theme 19: Bamboo Grove (Zen Light) */
+        [data-theme="bamboo-grove"] {
+            --bg-primary: #fafaf9;
+            --bg-secondary: #f5f5f4;
+            --bg-card: #ffffff;
+            --bg-elevated: #fcfcfb;
+            --text-primary: #292524;
+            --text-secondary: #57534e;
+            --text-muted: #78716c;
+            --accent-primary: #65a30d;
+            --accent-secondary: #4d7c0f;
+            --accent-success: #16a34a;
+            --accent-warning: #ca8a04;
+            --accent-danger: #dc2626;
+            --accent-info: #0891b2;
+            --border-color: #d6d3d1;
+            --border-focus: #65a30d;
+            --shadow-color: rgba(101, 163, 13, 0.1);
+            --gradient-primary: linear-gradient(135deg, #65a30d, #84cc16);
+            --gradient-success: linear-gradient(135deg, #22c55e, #4ade80);
+            --constellation-color: rgba(132, 204, 22, 0.4);
+            --constellation-line: rgba(101, 163, 13, 0.15);
+        }
+
+        /* Theme 20: Nordic Night (Cool Dark) */
+        [data-theme="nordic-night"] {
+            --bg-primary: #0f1419;
+            --bg-secondary: #192028;
+            --bg-card: #242d38;
+            --bg-elevated: #2f3b48;
+            --text-primary: #eceff4;
+            --text-secondary: #d8dee9;
+            --text-muted: #88c0d0;
+            --accent-primary: #81a1c1;
+            --accent-secondary: #5e81ac;
+            --accent-success: #a3be8c;
+            --accent-warning: #ebcb8b;
+            --accent-danger: #bf616a;
+            --accent-info: #88c0d0;
+            --border-color: #3b4252;
+            --border-focus: #81a1c1;
+            --shadow-color: rgba(129, 161, 193, 0.2);
+            --gradient-primary: linear-gradient(135deg, #5e81ac, #88c0d0);
+            --gradient-success: linear-gradient(135deg, #a3be8c, #8fbcbb);
+            --constellation-color: rgba(136, 192, 208, 0.45);
+            --constellation-line: rgba(129, 161, 193, 0.2);
+        }
+
+        /* Theme 21: High Contrast (Accessibility) */
+        [data-theme="high-contrast"] {
+            --bg-primary: #000000;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --bg-elevated: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #ffff00;
+            --text-muted: #00ffff;
+            --accent-primary: #00ff00;
+            --accent-secondary: #ff00ff;
+            --accent-success: #00ff00;
+            --accent-warning: #ffff00;
+            --accent-danger: #ff0000;
+            --accent-info: #00ffff;
+            --border-color: #ffffff;
+            --border-focus: #00ff00;
+            --shadow-color: rgba(255, 255, 255, 0.3);
+            --gradient-primary: linear-gradient(135deg, #00ff00, #00ffff);
+            --gradient-success: linear-gradient(135deg, #00ff00, #00ff88);
+            --constellation-color: rgba(0, 255, 255, 0.6);
+            --constellation-line: rgba(0, 255, 0, 0.3);
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: BASE STYLES & RESET
+          PURPOSE: Consistent baseline across browsers
+          EXTEND: Add vendor-specific resets as needed
+          OUTCOME: Predictable element behavior
+        ═══════════════════════════════════════════════════════════════════════════*/
+        
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+        }
+
+        a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--accent-secondary);
+            text-decoration: underline;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid var(--border-focus);
+            outline-offset: 2px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: ANIMATED SPLASH SCREEN
+          PURPOSE: Engaging entry experience with loading state
+          EXTEND: Modify animation keyframes for different effects
+          OUTCOME: Professional loading experience with smooth transition
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-icon {
+            font-size: 5rem;
+            animation: splash-pulse 2s ease-in-out infinite, splash-float 3s ease-in-out infinite;
+        }
+
+        .splash-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-top: var(--spacing-lg);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: splash-fade-in 1s ease-out;
+        }
+
+        .splash-loader {
+            margin-top: var(--spacing-xl);
+            width: 200px;
+            height: 4px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .splash-loader-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            animation: splash-load 2s ease-in-out forwards;
+        }
+
+        .splash-status {
+            margin-top: var(--spacing-md);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            animation: splash-fade-in 0.5s ease-out 0.5s both;
+        }
+
+        @keyframes splash-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes splash-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes splash-fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes splash-load {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: CONSTELLATION BACKGROUND
+          PURPOSE: Ambient visual state indicator and atmosphere
+          EXTEND: Modify particle count, colors, connection distance
+          OUTCOME: Living background that responds to state
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        #parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        #constellation-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: GAMIFICATION HUD
+          PURPOSE: Persistent progress tracking and motivation
+          EXTEND: Add new stats, badges, or indicators
+          OUTCOME: Always-visible learning progress
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        #hud-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, rgba(0,0,0,0) 100%);
+            padding: var(--spacing-md);
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: transform var(--transition-normal);
+        }
+
+        #hud-container.minimized {
+            transform: translateY(-60%);
+        }
+
+        #hud-container.minimized:hover {
+            transform: translateY(0);
+        }
+
+        .hud-grid {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: var(--spacing-md);
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .xp-bar-container {
+            flex: 1;
+        }
+
+        .xp-label {
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .xp-bar {
+            height: 24px;
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            position: relative;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width var(--transition-slow);
+            position: relative;
+        }
+
+        .xp-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: xp-shimmer 2s infinite;
+        }
+
+        @keyframes xp-shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .hud-stat {
+            background: var(--bg-card);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 0.9rem;
+            transition: border-color var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .hud-stat:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .hud-stat-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .hud-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hud-stat-value {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: HEADER
+          PURPOSE: Site identity and primary title
+          EXTEND: Add logo, subtitle variations
+          OUTCOME: Clear site branding
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        header {
+            background: var(--bg-secondary);
+            padding: var(--spacing-xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: 90px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        header h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+
+        header .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: STICKY NAVIGATION
+          PURPOSE: Persistent access to filtering, themes, languages, export
+          EXTEND: Add new navigation sections or dropdowns
+          OUTCOME: Always-accessible controls
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        nav {
+            background: var(--bg-secondary);
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            position: sticky;
+            top: 90px;
+            z-index: 900;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-group {
+            display: flex;
+            gap: var(--spacing-xs);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-separator {
+            width: 1px;
+            height: 32px;
+            background: var(--border-color);
+            margin: 0 var(--spacing-sm);
+        }
+
+        .nav-btn, .theme-select, .lang-select, .export-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .theme-select:hover, .lang-select:hover, .export-btn:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .nav-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .theme-select, .lang-select {
+            min-width: 150px;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: MAIN CONTENT AREA
+          PURPOSE: Primary content container with proper spacing
+          EXTEND: Adjust max-width for different layouts
+          OUTCOME: Readable, centered content
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: CLIENT-SIDE SEARCH
+          PURPOSE: Instant filtering of all content
+          EXTEND: Add advanced filters, fuzzy matching
+          OUTCOME: Fast content discovery
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        #search-container {
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 48px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        #search-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px var(--shadow-color);
+        }
+
+        #search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-secondary);
+            border: none;
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .search-clear.visible {
+            display: block;
+        }
+
+        #search-results-count {
+            margin-top: var(--spacing-sm);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: QUEST PANEL (Daily Goals)
+          PURPOSE: Gamified daily learning objectives
+          EXTEND: Add weekly/monthly goals, achievements
+          OUTCOME: Motivated daily engagement
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        .quest-panel {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-warning);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quest-panel h2 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .quest-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-sm);
+            transition: transform var(--transition-fast);
+        }
+
+        .quest-item:hover {
+            transform: translateX(4px);
+        }
+
+        .quest-item.completed {
+            opacity: 0.7;
+            text-decoration: line-through;
+        }
+
+        .quest-reward {
+            background: var(--accent-warning);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: var(--border-radius-lg);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: TEACHER PANEL
+          PURPOSE: Educator customization and export tools
+          EXTEND: Add curriculum mapping, standards alignment
+          OUTCOME: Easy adoption by educators
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        .teacher-panel {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-secondary);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .teacher-panel h2 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .teacher-panel > p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .teacher-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .teacher-btn {
+            background: var(--accent-secondary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .teacher-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: COLLAPSIBLE MODULES
+          PURPOSE: Organized content with expandable sections
+          EXTEND: Add drag-to-reorder, favorites
+          OUTCOME: Scannable, organized learning path
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        .module {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-lg);
+            overflow: hidden;
+            transition: box-shadow var(--transition-normal), border-color var(--transition-fast);
+        }
+
+        .module:hover {
+            box-shadow: 0 8px 32px var(--shadow-color);
+            border-color: var(--accent-primary);
+        }
+
+        .module-header {
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-md);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            user-select: none;
+        }
+
+        .module-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            flex: 1;
+            min-width: 0;
+        }
+
+        .module-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-md);
+        }
+
+        .module-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .module-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .module-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .module-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .module-right {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .module-progress {
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .module-progress-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-success);
+        }
+
+        .module-progress-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .chevron {
+            font-size: 1.5rem;
+            transition: transform var(--transition-normal);
+            color: var(--text-secondary);
+        }
+
+        .module.expanded .chevron {
+            transform: rotate(180deg);
+        }
+
+        .module-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-slow);
+        }
+
+        .module.expanded .module-content {
+            max-height: 50000px;
+        }
+
+        .module-body {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .module-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.7;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: LESSONS
+          PURPOSE: Individual learning units with rich content
+          EXTEND: Add video embeds, interactive elements
+          OUTCOME: Comprehensive learning experience
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        .lesson {
+            background: var(--bg-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-lg);
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .lesson h4 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .lesson > p {
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .lesson-section {
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .lesson-section h5 {
+            font-size: 1.1rem;
+            color: var(--accent-secondary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .lesson-section ul, .lesson-section ol {
+            margin-left: var(--spacing-lg);
+            margin-top: var(--spacing-sm);
+        }
+
+        .lesson-section li {
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.7;
+        }
+
+        .implementation-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--accent-primary);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .implementation-box h6 {
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1rem;
+        }
+
+        .tools-box {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--accent-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .tool-item, .resource-item {
+            background: var(--bg-card);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .tool-item strong, .resource-item strong {
+            color: var(--text-primary);
+        }
+
+        .tool-meta, .resource-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .key-terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .key-term {
+            background: var(--accent-primary);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .quiz-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            margin-top: var(--spacing-lg);
+            font-size: 1rem;
+            font-weight: 600;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .quiz-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: QUIZ MODAL
+          PURPOSE: Interactive knowledge assessment
+          EXTEND: Add different question types, timed quizzes
+          OUTCOME: Engaging self-assessment
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        .quiz-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+        }
+
+        .quiz-modal.active {
+            display: flex;
+        }
+
+        .quiz-container {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px var(--shadow-color);
+        }
+
+        .quiz-header {
+            background: var(--gradient-primary);
+            padding: var(--spacing-lg);
+            color: white;
+            border-radius: calc(var(--border-radius-lg) - 2px) calc(var(--border-radius-lg) - 2px) 0 0;
+        }
+
+        .quiz-header h2 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+        }
+
+        .quiz-subtitle {
+            margin-top: var(--spacing-sm);
+            opacity: 0.9;
+        }
+
+        .quiz-progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: var(--spacing-md);
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: white;
+            transition: width var(--transition-normal);
+        }
+
+        .quiz-body {
+            padding: var(--spacing-xl);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .quiz-options {
+            margin-top: var(--spacing-lg);
+        }
+
+        .quiz-option {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            margin-bottom: var(--spacing-sm);
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--accent-primary);
+            transform: translateX(4px);
+        }
+
+        .quiz-option.selected {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .quiz-option.correct {
+            background: var(--accent-success);
+            color: white;
+            border-color: var(--accent-success);
+        }
+
+        .quiz-option.incorrect {
+            background: var(--accent-danger);
+            color: white;
+            border-color: var(--accent-danger);
+        }
+
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .quiz-option.selected .option-letter,
+        .quiz-option.correct .option-letter,
+        .quiz-option.incorrect .option-letter {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .quiz-feedback {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: var(--accent-success);
+            color: white;
+        }
+
+        .quiz-feedback.incorrect {
+            background: var(--accent-danger);
+            color: white;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .quiz-btn-primary, .quiz-btn-secondary {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+
+        .quiz-btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .quiz-btn-primary:hover:not(:disabled) {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .quiz-btn-secondary:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .quiz-results {
+            display: none;
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .quiz-score {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: var(--spacing-lg) 0;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .quiz-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .quiz-stat {
+            background: var(--bg-secondary);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .quiz-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .quiz-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: FOOTER
+          PURPOSE: Zero-harm statement, attributions, licensing
+          EXTEND: Add social links, newsletter signup
+          OUTCOME: Clear ethical commitment and attribution
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        footer {
+            background: var(--bg-secondary);
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+            border-top: 2px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .zero-harm-box {
+            background: var(--bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-lg);
+            border-left: 4px solid var(--accent-success);
+        }
+
+        .zero-harm-box h3 {
+            font-family: var(--font-heading);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            color: var(--accent-success);
+        }
+
+        .zero-harm-box p {
+            margin-top: var(--spacing-sm);
+            line-height: 1.7;
+        }
+
+        .attributions-box {
+            background: var(--bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .attributions-box h3 {
+            font-family: var(--font-heading);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: PRINT STYLESHEET
+          PURPOSE: Clean printing without interactive elements
+          EXTEND: Adjust page breaks, margins
+          OUTCOME: Professional printed output
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        @media print {
+            #splash-screen,
+            #hud-container,
+            nav,
+            #parallax-container,
+            .quiz-btn,
+            .teacher-panel,
+            .quest-panel,
+            .quiz-modal,
+            .export-btn,
+            .theme-select,
+            .lang-select,
+            #search-container {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                color: black;
+                font-size: 12pt;
+            }
+
+            header {
+                margin-top: 0;
+                background: none;
+                border: none;
+            }
+
+            header h1 {
+                background: none;
+                -webkit-text-fill-color: black;
+                color: black;
+            }
+
+            .module {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #ccc;
+                margin-bottom: 1cm;
+            }
+
+            .module-content {
+                max-height: none !important;
+            }
+
+            .lesson {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                background: #f5f5f5;
+                border-left-color: #333;
+            }
+
+            footer {
+                background: none;
+                border-top: 1px solid #ccc;
+            }
+
+            a {
+                color: black;
+                text-decoration: underline;
+            }
+
+            a::after {
+                content: " (" attr(href) ")";
+                font-size: 0.8em;
+                color: #666;
+            }
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: NOSCRIPT FALLBACK
+          PURPOSE: Basic experience without JavaScript
+          EXTEND: Add more static content
+          OUTCOME: Graceful degradation
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        noscript .noscript-warning {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #f59e0b;
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: RESPONSIVE DESIGN
+          PURPOSE: Mobile-first responsive adjustments
+          EXTEND: Add breakpoints for specific devices
+          OUTCOME: Usable on all screen sizes
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        @media (max-width: 768px) {
+            .hud-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-sm);
+            }
+
+            .hud-stat {
+                justify-content: center;
+            }
+
+            nav {
+                top: 70px;
+            }
+
+            header {
+                margin-top: 180px;
+            }
+
+            .nav-separator {
+                display: none;
+            }
+
+            .module-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .module-right {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: var(--spacing-md);
+            }
+
+            .quiz-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .teacher-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: var(--spacing-md);
+            }
+
+            .module-icon {
+                width: 48px;
+                height: 48px;
+                min-width: 48px;
+                font-size: 1.5rem;
+            }
+
+            .lesson {
+                padding: var(--spacing-md);
+            }
+        }
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: REDUCED MOTION
+          PURPOSE: Accessibility for motion-sensitive users
+          EXTEND: Disable other animations as needed
+          OUTCOME: Comfortable experience for all users
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <noscript>
+        <div class="noscript-warning">
+            <h2>⚠️ JavaScript Required</h2>
+            <p>This learning platform requires JavaScript for interactive features like quizzes, progress tracking, and content filtering. Please enable JavaScript for the full experience.</p>
+            <p>Without JavaScript, you can still read the educational content below.</p>
+        </div>
+    </noscript>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="splash-icon">🌍</div>
+        <h1 class="splash-title" data-i18n="splash.title">Planetary Restoration Learning System</h1>
+        <div class="splash-loader">
+            <div class="splash-loader-bar"></div>
+        </div>
+        <p class="splash-status" data-i18n="splash.status">Initializing learning environment...</p>
+    </div>
+
+    <!-- CONSTELLATION BACKGROUND -->
+    <div id="parallax-container">
+        <canvas id="constellation-canvas" aria-hidden="true"></canvas>
+    </div>
+
+    <!-- GAMIFICATION HUD -->
+    <div id="hud-container" role="banner" aria-label="Learning Progress">
+        <div class="hud-grid">
+            <div class="xp-bar-container">
+                <div class="xp-label">
+                    <span id="xp-text">0 / 100 XP</span>
+                    <span id="next-level" data-i18n="hud.nextLevel">Next: Level 2</span>
+                </div>
+                <div class="xp-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="hud-stat" title="Current Level">
+                <div class="hud-stat-icon" id="level-icon">🌱</div>
+                <div>
+                    <div class="hud-stat-label" data-i18n="hud.level">Level</div>
+                    <div class="hud-stat-value" id="level-number">1</div>
+                </div>
+            </div>
+            <div class="hud-stat" title="Learning Streak">
+                <div class="hud-stat-icon">🔥</div>
+                <div>
+                    <div class="hud-stat-label" data-i18n="hud.streak">Streak</div>
+                    <div class="hud-stat-value" id="streak-days">0</div>
+                </div>
+            </div>
+            <div class="hud-stat" title="Lessons Completed">
+                <div class="hud-stat-icon">📚</div>
+                <div>
+                    <div class="hud-stat-label" data-i18n="hud.lessons">Lessons</div>
+                    <div class="hud-stat-value" id="lessons-completed">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <h1 data-i18n="site.title">🌍 Planetary Restoration Learning System</h1>
+        <p class="subtitle" data-i18n="site.subtitle">Comprehensive Guide to Ecological Stewardship</p>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav role="navigation" aria-label="Main Navigation">
+        <div class="nav-group">
+            <button class="nav-btn active" data-filter="all" data-i18n="nav.all">All Modules</button>
+            <button class="nav-btn" data-filter="beginner" data-i18n="nav.beginner">Beginner</button>
+            <button class="nav-btn" data-filter="intermediate" data-i18n="nav.intermediate">Intermediate</button>
+            <button class="nav-btn" data-filter="advanced" data-i18n="nav.advanced">Advanced</button>
+        </div>
+        <div class="nav-separator" aria-hidden="true"></div>
+        <div class="nav-group">
+            <select class="theme-select" id="theme-selector" aria-label="Select Theme">
+                <option value="cosmic-night">🌌 Cosmic Night</option>
+                <option value="forest-dawn">🌲 Forest Dawn</option>
+                <option value="ocean-depths">🌊 Ocean Depths</option>
+                <option value="desert-sunset">🏜️ Desert Sunset</option>
+                <option value="aurora-borealis">✨ Aurora Borealis</option>
+                <option value="volcanic-ember">🌋 Volcanic Ember</option>
+                <option value="lavender-fields">💜 Lavender Fields</option>
+                <option value="midnight-garden">🌿 Midnight Garden</option>
+                <option value="arctic-frost">❄️ Arctic Frost</option>
+                <option value="sahara-dusk">🐪 Sahara Dusk</option>
+                <option value="moss-stone">🪨 Moss Stone</option>
+                <option value="cherry-blossom">🌸 Cherry Blossom</option>
+                <option value="deep-space">🚀 Deep Space</option>
+                <option value="sunflower-meadow">🌻 Sunflower Meadow</option>
+                <option value="stormy-twilight">⛈️ Stormy Twilight</option>
+                <option value="rainforest-canopy">🦜 Rainforest Canopy</option>
+                <option value="coral-reef">🐠 Coral Reef</option>
+                <option value="nebula-violet">🔮 Nebula Violet</option>
+                <option value="bamboo-grove">🎋 Bamboo Grove</option>
+                <option value="nordic-night">🏔️ Nordic Night</option>
+                <option value="high-contrast">♿ High Contrast</option>
+            </select>
+            <select class="lang-select" id="lang-selector" aria-label="Select Language">
+                <option value="en">🇬🇧 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="pt">🇧🇷 Português</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="ar">🇸🇦 العربية</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="bn">🇧🇩 বাংলা</option>
+                <option value="id">🇮🇩 Indonesia</option>
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="th">🇹🇭 ไทย</option>
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="pl">🇵🇱 Polski</option>
+                <option value="nl">🇳🇱 Nederlands</option>
+                <option value="sv">🇸🇪 Svenska</option>
+                <option value="uk">🇺🇦 Українська</option>
+            </select>
+        </div>
+        <div class="nav-separator" aria-hidden="true"></div>
+        <div class="nav-group">
+            <button class="export-btn" id="save-html-btn">💾 <span data-i18n="nav.save">Save HTML</span></button>
+            <button class="export-btn" id="print-btn">🖨️ <span data-i18n="nav.print">Print</span></button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div id="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="search" id="search-input" placeholder="Search modules, lessons, strategies, tools..." aria-label="Search content" data-i18n-placeholder="search.placeholder">
+            <button class="search-clear" id="search-clear" aria-label="Clear search">✕ Clear</button>
+            <div id="search-results-count" aria-live="polite"></div>
+        </div>
+
+        <div class="quest-panel" role="region" aria-labelledby="quest-title">
+            <h2 id="quest-title">🎯 <span data-i18n="quests.title">Daily Learning Goals</span></h2>
+            <div id="quests-container"></div>
+        </div>
+
+        <div class="teacher-panel" role="region" aria-labelledby="teacher-title">
+            <h2 id="teacher-title">👩‍🏫 <span data-i18n="teacher.title">For Educators: Adopt & Customize</span></h2>
+            <p data-i18n="teacher.description">This comprehensive platform is designed for teachers to adopt, modify, and expand. All content, quizzes, and systems are fully customizable.</p>
+            <div class="teacher-controls">
+                <button class="teacher-btn" id="export-package-btn">📦 <span data-i18n="teacher.export">Export Full Package</span></button>
+                <button class="teacher-btn" id="customization-guide-btn">📖 <span data-i18n="teacher.guide">Customization Guide</span></button>
+                <button class="teacher-btn" id="export-quiz-btn">🧠 <span data-i18n="teacher.quizBank">Download Quiz Bank</span></button>
+                <button class="teacher-btn" id="reset-progress-btn">🔄 <span data-i18n="teacher.reset">Reset Progress</span></button>
+            </div>
+        </div>
+
+        <div id="modules-container" role="region" aria-label="Learning Modules"></div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="zero-harm-box">
+                <h3>🛡️ <span data-i18n="footer.zeroHarmTitle">Zero-Harm Educational Commitment</span></h3>
+                <p><strong data-i18n="footer.purpose">Purpose:</strong> <span data-i18n="footer.purposeText">This platform exists solely to promote ecological literacy, planetary stewardship, and regenerative practices for current and future generations.</span></p>
+                <p><strong data-i18n="footer.nonWeaponization">Non-Weaponization:</strong> <span data-i18n="footer.nonWeaponizationText">No component may be repurposed for surveillance, manipulation, ecological harm, or violation of human rights.</span></p>
+                <p><strong data-i18n="footer.antiInversion">Anti-Inversion:</strong> <span data-i18n="footer.antiInversionText">Design patterns prioritize transparency, accessibility, user autonomy, offline capability, and local-first data storage. No hidden telemetry or auto-send features.</span></p>
+                <p><strong data-i18n="footer.license">License:</strong> <span data-i18n="footer.licenseText">Educational content under CC BY-SA 4.0. Open source patterns retain original licenses.</span></p>
+            </div>
+            <div class="attributions-box">
+                <h3 data-i18n="footer.attributions">📜 Attributions & Licensing</h3>
+                <p data-i18n="footer.attributionsText">This platform uses no external dependencies, fonts, or tracking scripts. All data is stored locally in your browser using IndexedDB. Design patterns are original or derived from public domain/open source principles. Icons are Unicode emoji.</p>
+            </div>
+            <p class="footer-copyright">© 2025 Planetary Restoration Archive | <span data-i18n="footer.tagline">From Extraction to Stewardship</span></p>
+        </div>
+    </footer>
+
+    <!-- QUIZ MODAL -->
+    <div class="quiz-modal" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h2 id="quiz-title" data-i18n="quiz.title">Practice Quiz</h2>
+                <p class="quiz-subtitle" id="quiz-subtitle"></p>
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="quiz-progress"></div>
+                </div>
+            </div>
+            <div class="quiz-body">
+                <div id="quiz-questions-container"></div>
+                <div class="quiz-results" id="quiz-results">
+                    <h2>🎉 <span data-i18n="quiz.complete">Quiz Complete!</span></h2>
+                    <div class="quiz-score" id="quiz-final-score">0%</div>
+                    <div class="quiz-stats">
+                        <div class="quiz-stat">
+                            <div class="quiz-stat-value" id="quiz-correct" style="color: var(--accent-success);">0</div>
+                            <div class="quiz-stat-label" data-i18n="quiz.correct">Correct</div>
+                        </div>
+                        <div class="quiz-stat">
+                            <div class="quiz-stat-value" id="quiz-incorrect" style="color: var(--accent-danger);">0</div>
+                            <div class="quiz-stat-label" data-i18n="quiz.incorrect">Incorrect</div>
+                        </div>
+                        <div class="quiz-stat">
+                            <div class="quiz-stat-value" id="quiz-xp-earned" style="color: var(--accent-primary);">0</div>
+                            <div class="quiz-stat-label" data-i18n="quiz.xpEarned">XP Earned</div>
+                        </div>
+                    </div>
+                    <div class="quiz-actions">
+                        <button class="quiz-btn-secondary" id="close-quiz-btn" data-i18n="quiz.close">Close</button>
+                        <button class="quiz-btn-primary" id="retake-quiz-btn" data-i18n="quiz.retake">Retake Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /*═══════════════════════════════════════════════════════════════════════════
+          PLANETARY RESTORATION LEARNING SYSTEM - JAVASCRIPT
+          
+          ARCHITECTURE:
+          1. IndexedDB for persistent storage
+          2. Full translation engine (20+ languages)
+          3. Gamification system
+          4. Module/lesson/quiz management
+          5. Constellation visualizer
+          6. Service worker registration
+          
+          EXTEND: Each section is clearly marked for easy modification
+          OUTCOME: Fully offline-capable, persistent learning experience
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        'use strict';
+
+        /*═══════════════════════════════════════════════════════════════════════════
+          SECTION: TRANSLATION ENGINE
+          PURPOSE: Full client-side translation for 20+ languages
+          EXTEND: Add new languages by adding to translations object
+          OUTCOME: Instant language switching with persistent preference
+        ═══════════════════════════════════════════════════════════════════════════*/
+
+        const translations = {
+            en: {
+                'splash.title': 'Planetary Restoration Learning System',
+                'splash.status': 'Initializing learning environment...',
+                'site.title': '🌍 Planetary Restoration Learning System',
+                'site.subtitle': 'Comprehensive Guide to Ecological Stewardship',
+                'hud.level': 'Level',
+                'hud.streak': 'Streak',
+                'hud.lessons': 'Lessons',
+                'hud.nextLevel': 'Next: Level {level}',
+                'nav.all': 'All Modules',
+                'nav.beginner': 'Beginner',
+                'nav.intermediate': 'Intermediate',
+                'nav.advanced': 'Advanced',
+                'nav.save': 'Save HTML',
+                'nav.print': 'Print',
+                'search.placeholder': 'Search modules, lessons, strategies, tools...',
+                'search.results': '{count} results found',
+                'search.noResults': 'No results found',
+                'quests.title': 'Daily Learning Goals',
+                'quests.lesson': 'Complete one comprehensive lesson',
+                'quests.streak': 'Maintain your learning streak',
+                'quests.quiz': 'Score 80%+ on a practice quiz',
+                'teacher.title': 'For Educators: Adopt & Customize',
+                'teacher.description': 'This comprehensive platform is designed for teachers to adopt, modify, and expand. All content, quizzes, and systems are fully customizable.',
+                'teacher.export': 'Export Full Package',
+                'teacher.guide': 'Customization Guide',
+                'teacher.quizBank': 'Download Quiz Bank',
+                'teacher.reset': 'Reset Progress',
+                'footer.zeroHarmTitle': 'Zero-Harm Educational Commitment',
+                'footer.purpose': 'Purpose:',
+                'footer.purposeText': 'This platform exists solely to promote ecological literacy, planetary stewardship, and regenerative practices for current and future generations.',
+                'footer.nonWeaponization': 'Non-Weaponization:',
+                'footer.nonWeaponizationText': 'No component may be repurposed for surveillance, manipulation, ecological harm, or violation of human rights.',
+                'footer.antiInversion': 'Anti-Inversion:',
+                'footer.antiInversionText': 'Design patterns prioritize transparency, accessibility, user autonomy, offline capability, and local-first data storage. No hidden telemetry or auto-send features.',
+                'footer.license': 'License:',
+                'footer.licenseText': 'Educational content under CC BY-SA 4.0. Open source patterns retain original licenses.',
+                'footer.attributions': '📜 Attributions & Licensing',
+                'footer.attributionsText': 'This platform uses no external dependencies, fonts, or tracking scripts. All data is stored locally in your browser using IndexedDB. Design patterns are original or derived from public domain/open source principles. Icons are Unicode emoji.',
